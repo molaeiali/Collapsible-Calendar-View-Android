@@ -1,8 +1,10 @@
-package com.molaei.customcalendar;
+package org.molaei.customcalendar;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.molaei.customcalendar.R;
 
 import org.molaei.customcalendar.widget.CustomCalendar;
 

@@ -1,4 +1,4 @@
-package com.molaei.customcalendar;
+package org.molaei.customcalendar;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
