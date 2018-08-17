@@ -4,26 +4,19 @@ package com.shrikanthravi.collapsiblecalendarview.widget;
  * Created by shrikanthravi on 07/03/18.
  */
 
-
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 
 import com.shrikanthravi.collapsiblecalendarview.R;
 import com.shrikanthravi.collapsiblecalendarview.data.CalendarAdapter;
 import com.shrikanthravi.collapsiblecalendarview.data.Day;
 import com.shrikanthravi.collapsiblecalendarview.data.Event;
-import com.shrikanthravi.collapsiblecalendarview.view.ExpandIconView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -79,43 +72,6 @@ public class CollapsibleCalendar extends UICalendar {
                 nextMonth();
             }
         });
-
-        mBtnPrevWeek.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                prevWeek();
-            }
-        });
-
-        mBtnNextWeek.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nextWeek();
-            }
-        });
-
-        expandIconView.setState(ExpandIconView.MORE, true);
-
-
-        expandIconView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (expanded) {
-                    collapse(400);
-                } else {
-                    expand(400);
-                }
-            }
-        });
-
-        this.post(new Runnable() {
-            @Override
-            public void run() {
-                collapseTo(mCurrentWeekIndex);
-            }
-        });
-
-
     }
 
     @Override
@@ -126,12 +82,6 @@ public class CollapsibleCalendar extends UICalendar {
 
         if (mIsWaitingForUpdate) {
             redraw();
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    collapseTo(mCurrentWeekIndex);
-                }
-            });
             mIsWaitingForUpdate = false;
             if (mListener != null) {
                 mListener.onDataUpdate();
@@ -158,19 +108,15 @@ public class CollapsibleCalendar extends UICalendar {
                 if (isSelectedDay(day)) {// set today's item
                     txtDay.setBackgroundDrawable(getSelectedItemBackgroundDrawable());
                     txtDay.setTextColor(getSelectedItemTextColor());
-//                    txtDay.getBackground().setColorFilter(getSelectedItemBackgroundColor(), PorterDuff.Mode.SRC_IN);
                 } else if (isToady(day)){// set the selected item
                     txtDay.setBackgroundDrawable(getTodayItemBackgroundDrawable());
                     txtDay.setTextColor(getTodayItemTextColor());
-//                    txtDay.getBackground().setColorFilter(getTodayItemBackgroundColor(), PorterDuff.Mode.SRC_IN);
                 } else if (isPassedFrom(day)) {// set passed days
                     txtDay.setBackgroundDrawable(getPassedDateItemBackgroundDrawable());
                     txtDay.setTextColor(getPassedDateItemTextColor());
-//                    txtDay.getBackground().setColorFilter(getPassedDateItemBackgroundColor(), PorterDuff.Mode.SRC_IN);
                 } else {// set normal days
                     txtDay.setBackgroundDrawable(getNormalDateItemBackgroundDrawable());
                     txtDay.setTextColor(getNormalDateItemTextColor());
-//                    txtDay.getBackground().setColorFilter(getNormalDateItemBackgroundColor(), PorterDuff.Mode.SRC_IN);
                 }
 
             }
@@ -347,7 +293,6 @@ public class CollapsibleCalendar extends UICalendar {
             prevMonth();
         } else {
             mCurrentWeekIndex--;
-            collapseTo(mCurrentWeekIndex);
         }
     }
 
@@ -357,7 +302,6 @@ public class CollapsibleCalendar extends UICalendar {
             nextMonth();
         } else {
             mCurrentWeekIndex++;
-            collapseTo(mCurrentWeekIndex);
         }
     }
 
@@ -437,134 +381,6 @@ public class CollapsibleCalendar extends UICalendar {
         return position;
     }
 
-    public void collapse(int duration) {
-
-        if (getState() == STATE_EXPANDED) {
-            setState(STATE_PROCESSING);
-
-            mLayoutBtnGroupMonth.setVisibility(GONE);
-            mLayoutBtnGroupWeek.setVisibility(VISIBLE);
-            mBtnPrevWeek.setClickable(false);
-            mBtnNextWeek.setClickable(false);
-
-            int index = getSuitableRowIndex();
-            mCurrentWeekIndex = index;
-
-            final int currentHeight = mInitHeight;
-            final int targetHeight = mTableBody.getChildAt(index).getMeasuredHeight();
-            int tempHeight = 0;
-            for (int i = 0; i < index; i++) {
-                tempHeight += mTableBody.getChildAt(i).getMeasuredHeight();
-            }
-            final int topHeight = tempHeight;
-
-            Animation anim = new Animation() {
-                @Override
-                protected void applyTransformation(float interpolatedTime, Transformation t) {
-
-                    mScrollViewBody.getLayoutParams().height = (interpolatedTime == 1)
-                            ? targetHeight
-                            : currentHeight - (int) ((currentHeight - targetHeight) * interpolatedTime);
-                    mScrollViewBody.requestLayout();
-
-                    if (mScrollViewBody.getMeasuredHeight() < topHeight + targetHeight) {
-                        int position = topHeight + targetHeight - mScrollViewBody.getMeasuredHeight();
-                        mScrollViewBody.smoothScrollTo(0, position);
-                    }
-
-                    if (interpolatedTime == 1) {
-                        setState(STATE_COLLAPSED);
-
-                        mBtnPrevWeek.setClickable(true);
-                        mBtnNextWeek.setClickable(true);
-                    }
-                }
-            };
-            anim.setDuration(duration);
-            startAnimation(anim);
-        }
-
-        expandIconView.setState(ExpandIconView.MORE, true);
-    }
-
-    private void collapseTo(int index) {
-        if (getState() == STATE_COLLAPSED) {
-            if (index == -1) {
-                index = mTableBody.getChildCount() - 1;
-            }
-            mCurrentWeekIndex = index;
-
-            final int targetHeight = mTableBody.getChildAt(index).getMeasuredHeight();
-            int tempHeight = 0;
-            for (int i = 0; i < index; i++) {
-                tempHeight += mTableBody.getChildAt(i).getMeasuredHeight();
-            }
-            final int topHeight = tempHeight;
-
-            mScrollViewBody.getLayoutParams().height = targetHeight;
-            mScrollViewBody.requestLayout();
-
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mScrollViewBody.smoothScrollTo(0, topHeight);
-                }
-            });
-
-
-            if (mListener != null) {
-                mListener.onWeekChange(mCurrentWeekIndex);
-            }
-        }
-    }
-
-    public void expand(int duration) {
-        if (getState() == STATE_COLLAPSED) {
-            setState(STATE_PROCESSING);
-
-            mLayoutBtnGroupMonth.setVisibility(VISIBLE);
-            mLayoutBtnGroupWeek.setVisibility(GONE);
-            mBtnPrevMonth.setClickable(false);
-            mBtnNextMonth.setClickable(false);
-
-            final int currentHeight = mScrollViewBody.getMeasuredHeight();
-            final int targetHeight = mInitHeight;
-
-            Animation anim = new Animation() {
-                @Override
-                protected void applyTransformation(float interpolatedTime, Transformation t) {
-
-                    mScrollViewBody.getLayoutParams().height = (interpolatedTime == 1)
-                            ? LinearLayout.LayoutParams.WRAP_CONTENT
-                            : currentHeight - (int) ((currentHeight - targetHeight) * interpolatedTime);
-                    mScrollViewBody.requestLayout();
-
-                    if (interpolatedTime == 1) {
-                        setState(STATE_EXPANDED);
-
-                        mBtnPrevMonth.setClickable(true);
-                        mBtnNextMonth.setClickable(true);
-                    }
-                }
-            };
-            anim.setDuration(duration);
-            startAnimation(anim);
-        }
-
-        expandIconView.setState(ExpandIconView.LESS, true);
-    }
-
-    @Override
-    public void setState(int state) {
-        super.setState(state);
-        if (state == STATE_COLLAPSED) {
-            expanded = false;
-        }
-        if (state == STATE_EXPANDED) {
-            expanded = true;
-        }
-    }
-
     public void select(Day day) {
         setSelectedItem(new Day(day.getYear(), day.getMonth(), day.getDay()));
 
@@ -572,15 +388,6 @@ public class CollapsibleCalendar extends UICalendar {
 
         if (mListener != null) {
             mListener.onDaySelect();
-        }
-    }
-
-    public void setStateWithUpdateUI(int state) {
-        setState(state);
-
-        if (getState() != state) {
-            mIsWaitingForUpdate = true;
-            requestLayout();
         }
     }
 
