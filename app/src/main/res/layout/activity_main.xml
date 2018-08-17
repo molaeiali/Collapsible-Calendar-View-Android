@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.molaei.customcalendar.org.molaei.customcalendar.MainActivity">
+    tools:context="org.molaei.customcalendar.MainActivity">
 
     <org.molaei.customcalendar.widget.CustomCalendar
         android:id="@+id/collapsibleCalendarView"
