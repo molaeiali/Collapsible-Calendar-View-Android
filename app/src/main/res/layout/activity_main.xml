@@ -16,7 +16,6 @@
         app:expandIconColor="#C6C6C6"
         app:primaryColor="@android:color/white"
         app:textColor="#C6C6C6"
-        app:state="expanded"
         app:selectedItem_background="@drawable/circle_purple_solid_background"
         app:selectedItem_textColor="@android:color/white"
         app:passedDateItem_background="@drawable/circle_gray_solid_background"
