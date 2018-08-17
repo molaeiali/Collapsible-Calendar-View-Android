@@ -118,7 +118,8 @@ public class CalendarAdapter {
 
             txtDay.setText(String.valueOf(day.getDay()));
             if (day.getMonth() != mCal.get(Calendar.MONTH)) {
-                txtDay.setAlpha(0.3f);
+//                txtDay.setAlpha(0.3f);
+                txtDay.setVisibility(View.GONE);
             }
 
             for (int j = 0; j < mEventList.size(); j++) {
@@ -127,7 +128,7 @@ public class CalendarAdapter {
                         && day.getMonth() == event.getMonth()
                         && day.getDay() == event.getDay()) {
                     imgEventTag.setVisibility(View.VISIBLE);
-                    imgEventTag.setColorFilter(event.getColor(),PorterDuff.Mode.SRC_ATOP);
+                    imgEventTag.setColorFilter(event.getColor(), PorterDuff.Mode.SRC_ATOP);
                 }
             }
 

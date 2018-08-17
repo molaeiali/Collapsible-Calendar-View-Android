@@ -5,19 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.shrikanthravi.collapsiblecalendarview.MainActivity">
+
     <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
+        android:id="@+id/collapsibleCalendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:primaryColor="@color/google_red"
-        app:textColor="@android:color/white"
-        app:selectedItem_textColor="@color/google_red"
-        android:id="@+id/collapsibleCalendarView"
-        app:todayItem_textColor="@android:color/white"
-        app:todayItem_background="@drawable/circle_white_stroke_background"
-        app:selectedItem_background="@drawable/circle_white_solid_background"
-        app:buttonLeft_drawableTintColor="@android:color/white"
-        app:buttonRight_drawableTintColor="@android:color/white"
-        app:expandIconColor="@android:color/white"
-        app:eventColor="@android:color/white"
-        ></com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar>
+        app:buttonLeft_drawableTintColor="#C6C6C6"
+        app:buttonRight_drawableTintColor="#C6C6C6"
+        app:eventColor="#C6C6C6"
+        app:expandIconColor="#C6C6C6"
+        app:primaryColor="@android:color/white"
+        app:textColor="#C6C6C6"
+        app:state="expanded"
+        app:selectedItem_background="@drawable/circle_purple_solid_background"
+        app:selectedItem_textColor="@android:color/white"
+        app:passedDateItem_background="@drawable/circle_gray_solid_background"
+        app:passedDateItem_textColor="@android:color/white"
+        app:normalDateItem_background="@drawable/circle_gray_stroke_background"
+        app:normalDateItem_textColor="#c6c6c6"
+        app:todayItem_background="@drawable/circle_purple_stroke_background"
+        app:todayItem_textColor="#c6c6c6"
+        />
 </RelativeLayout>

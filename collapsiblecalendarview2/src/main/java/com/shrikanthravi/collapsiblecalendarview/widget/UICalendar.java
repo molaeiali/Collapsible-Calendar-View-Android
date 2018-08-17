@@ -1,16 +1,13 @@
 package com.shrikanthravi.collapsiblecalendarview.widget;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -65,10 +62,20 @@ public abstract class UICalendar extends LinearLayout {
     private int mPrimaryColor = Color.WHITE;
 
     private int mTodayItemTextColor = Color.BLACK;
+    private int mTodayItemBackgroundColor = Color.BLACK;
     private Drawable mTodayItemBackgroundDrawable =
             getResources().getDrawable(R.drawable.circle_black_stroke_background);
     private int mSelectedItemTextColor = Color.WHITE;
+    private int mSelectedItemBackgroundColor = Color.WHITE;
     private Drawable mSelectedItemBackgroundDrawable =
+            getResources().getDrawable(R.drawable.circle_black_solid_background);
+    private int mPassedDateItemTextColor = Color.WHITE;
+    private int mPassedDateItemBackgroundColor = Color.WHITE;
+    private Drawable mPassedDateItemBackgroundDrawable =
+            getResources().getDrawable(R.drawable.circle_black_solid_background);
+    private int mNormalDateItemTextColor = Color.WHITE;
+    private int mNormalDateItemBackgroundColor = Color.WHITE;
+    private Drawable mNormalDateItemBackgroundDrawable =
             getResources().getDrawable(R.drawable.circle_black_solid_background);
 
     private Drawable mButtonLeftDrawable =
@@ -147,6 +154,8 @@ public abstract class UICalendar extends LinearLayout {
 
         setTodayItemTextColor(attrs.getColor(
                 R.styleable.UICalendar_todayItem_textColor, mTodayItemTextColor));
+        setTodayItemBackgroundColor(attrs.getColor(
+                R.styleable.UICalendar_todayItem_background_color,mTodayItemBackgroundColor));
         Drawable todayItemBackgroundDrawable =
                 attrs.getDrawable(R.styleable.UICalendar_todayItem_background);
         if (todayItemBackgroundDrawable != null) {
@@ -157,12 +166,38 @@ public abstract class UICalendar extends LinearLayout {
 
         setSelectedItemTextColor(attrs.getColor(
                 R.styleable.UICalendar_selectedItem_textColor, mSelectedItemTextColor));
+        setSelectedItemBackgroundColor(attrs.getColor(
+                R.styleable.UICalendar_selectedItem_background_color,mSelectedItemBackgroundColor));
         Drawable selectedItemBackgroundDrawable =
                 attrs.getDrawable(R.styleable.UICalendar_selectedItem_background);
         if (selectedItemBackgroundDrawable != null) {
             setSelectedItemBackgroundDrawable(selectedItemBackgroundDrawable);
         } else {
             setSelectedItemBackgroundDrawable(mSelectedItemBackgroundDrawable);
+        }
+
+        setPassedDateItemTextColor(attrs.getColor(
+                R.styleable.UICalendar_passedDateItem_textColor,mPassedDateItemTextColor));
+        setPassedDateItemBackgroundColor(attrs.getColor(
+                R.styleable.UICalendar_passedDateItem_background_color,mPassedDateItemBackgroundColor));
+        Drawable passedDateItemBackgroundDrawable =
+                attrs.getDrawable(R.styleable.UICalendar_passedDateItem_background);
+        if(passedDateItemBackgroundDrawable != null){
+            setPassedDateItemBackgroundDrawable(passedDateItemBackgroundDrawable);
+        } else {
+            setPassedDateItemBackgroundDrawable(mPassedDateItemBackgroundDrawable);
+        }
+
+        setNormalDateItemTextColor(attrs.getColor(
+                R.styleable.UICalendar_normalDateItem_textColor,mNormalDateItemTextColor));
+        setNormalDateItemBackgroundColor(attrs.getColor(
+                R.styleable.UICalendar_normalDateItem_background_color,mNormalDateItemBackgroundColor));
+        Drawable normalDateItemBackgroundDrawable =
+                attrs.getDrawable(R.styleable.UICalendar_normalDateItem_background);
+        if(normalDateItemBackgroundDrawable != null){
+            setNormalDateItemBackgroundDrawable(normalDateItemBackgroundDrawable);
+        } else {
+            setNormalDateItemBackgroundDrawable(mNormalDateItemBackgroundDrawable);
         }
 
         Drawable buttonLeftDrawable =
@@ -312,6 +347,70 @@ public abstract class UICalendar extends LinearLayout {
     public void setSelectedItemBackgroundDrawable(Drawable selectedItemBackground) {
         this.mSelectedItemBackgroundDrawable = selectedItemBackground;
         redraw();
+    }
+
+    public int getPassedDateItemTextColor() {
+        return mPassedDateItemTextColor;
+    }
+
+    public void setPassedDateItemTextColor(int mPassedDateItemTextColor) {
+        this.mPassedDateItemTextColor = mPassedDateItemTextColor;
+    }
+
+    public Drawable getPassedDateItemBackgroundDrawable() {
+        return mPassedDateItemBackgroundDrawable;
+    }
+
+    public void setPassedDateItemBackgroundDrawable(Drawable mPassedDateItemBackgroundDrawable) {
+        this.mPassedDateItemBackgroundDrawable = mPassedDateItemBackgroundDrawable;
+    }
+
+    public int getNormalDateItemTextColor() {
+        return mNormalDateItemTextColor;
+    }
+
+    public void setNormalDateItemTextColor(int mNormalDateItemTextColor) {
+        this.mNormalDateItemTextColor = mNormalDateItemTextColor;
+    }
+
+    public Drawable getNormalDateItemBackgroundDrawable() {
+        return mNormalDateItemBackgroundDrawable;
+    }
+
+    public void setNormalDateItemBackgroundDrawable(Drawable mNormalDateItemBackgroundDrawable) {
+        this.mNormalDateItemBackgroundDrawable = mNormalDateItemBackgroundDrawable;
+    }
+
+    public int getTodayItemBackgroundColor() {
+        return mTodayItemBackgroundColor;
+    }
+
+    public void setTodayItemBackgroundColor(int mTodayItemBackgroundColor) {
+        this.mTodayItemBackgroundColor = mTodayItemBackgroundColor;
+    }
+
+    public int getSelectedItemBackgroundColor() {
+        return mSelectedItemBackgroundColor;
+    }
+
+    public void setSelectedItemBackgroundColor(int mSelectedItemBackgroundColor) {
+        this.mSelectedItemBackgroundColor = mSelectedItemBackgroundColor;
+    }
+
+    public int getPassedDateItemBackgroundColor() {
+        return mPassedDateItemBackgroundColor;
+    }
+
+    public void setPassedDateItemBackgroundColor(int mPassedDateItemBackgroundColor) {
+        this.mPassedDateItemBackgroundColor = mPassedDateItemBackgroundColor;
+    }
+
+    public int getNormalDateItemBackgroundColor() {
+        return mNormalDateItemBackgroundColor;
+    }
+
+    public void setNormalDateItemBackgroundColor(int mNormalDateItemBackgroundColor) {
+        this.mNormalDateItemBackgroundColor = mNormalDateItemBackgroundColor;
     }
 
     public Drawable getButtonLeftDrawable() {

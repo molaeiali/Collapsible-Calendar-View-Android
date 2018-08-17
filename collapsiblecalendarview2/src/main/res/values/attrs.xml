@@ -39,9 +39,19 @@
 
         <attr name="todayItem_textColor" format="color" />
         <attr name="todayItem_background" format="integer" />
+        <attr name="todayItem_background_color" format="color" />
 
         <attr name="selectedItem_textColor" format="color" />
         <attr name="selectedItem_background" format="integer" />
+        <attr name="selectedItem_background_color" format="color" />
+
+        <attr name="passedDateItem_textColor" format="color" />
+        <attr name="passedDateItem_background" format="integer" />
+        <attr name="passedDateItem_background_color" format="color" />
+
+        <attr name="normalDateItem_textColor" format="color" />
+        <attr name="normalDateItem_background" format="integer" />
+        <attr name="normalDateItem_background_color" format="color" />
 
         <attr name="buttonLeft_drawable" format="integer" />
         <attr name="buttonRight_drawable" format="integer" />
